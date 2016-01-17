@@ -35,7 +35,7 @@ pay $20 per month (per form) for processing contact forms!
 Demo
 ----
 
-Coming soon.
+See https://github.com/mishbahr/staticgen-fwdform
 
 Features
 --------
