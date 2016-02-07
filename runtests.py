@@ -35,7 +35,7 @@ try:
         }],
         STATIC_URL='/static/',
         EMAIL_BACKEND='django.core.mail.backends.console.EmailBackend',
-        AKISMET_API_KEY=env('AKISMET_API_KEY'),
+        AKISMET_API_KEY='123APIKey',
 
     )
 

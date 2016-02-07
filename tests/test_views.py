@@ -111,7 +111,8 @@ class TestFwdform(TestCase):
         response = self.client.post(self.form_action_url, data=self.form_data)
 
         self.assertEquals(len(mail.outbox), 1)
-        self.assertRedirects(response, reverse('fwdform:thank_you'))
+        thankyou_url = 'http://testserver{path}'.format(path=reverse('fwdform:thank_you'))
+        self.assertRedirects(response, thankyou_url)
 
         fwdform = FwdForm.objects.get(pk=self.fwdform.pk)
         self.assertTrue(fwdform.sent_count, 1)    \
