@@ -7,7 +7,7 @@ import json
 from django.core.urlresolvers import reverse
 from django.db.models import F
 from django.http import JsonResponse
-from django.shortcuts import redirect, render_to_response
+from django.shortcuts import redirect, render
 from django.utils import six
 from django.utils.encoding import force_text
 from django.utils.translation import ugettext_lazy as _
@@ -28,7 +28,7 @@ HTTP_404_NOT_FOUND = 404
 HTTP_500_INTERNAL_SERVER_ERROR = 500
 
 
-def handle_error(message, reason=None, status=HTTP_400_BAD_REQUEST,
+def handle_error(request, message, reason=None, status=HTTP_400_BAD_REQUEST,
                  json_response=False, extra_context=None):
 
     default_errors = {
@@ -52,7 +52,7 @@ def handle_error(message, reason=None, status=HTTP_400_BAD_REQUEST,
 
     if json_response:
         return JsonResponse(context, status=status)
-    return render_to_response('fwdform/error.html', context, status=status)
+    return render(request, 'fwdform/error.html', context, status=status)
 
 
 @csrf_exempt
@@ -64,7 +64,8 @@ def create_or_update_form(request, hashid):
         site = Site.objects.get_by_hashid(hashid=hashid)
     except Site.DoesNotExist:
         message = _('Site does not exist.')
-        return handle_error(message, status=HTTP_404_NOT_FOUND, json_response=json_response)
+        return handle_error(request, message, status=HTTP_404_NOT_FOUND,
+                            json_response=json_response)
 
     data = {
         'site': site.id,
@@ -85,11 +86,13 @@ def create_or_update_form(request, hashid):
 
         if not form_instance or not form_instance.site == site:
             message = _('Form does not exists.')
-            return handle_error(message, status=HTTP_404_NOT_FOUND, json_response=json_response)
+            return handle_error(
+                request, message, status=HTTP_404_NOT_FOUND, json_response=json_response)
 
         form = FwdFormModelForm(data, instance=form_instance, partial=True)
         if not form.is_valid():  # pragma: no cover
             return handle_error(
+                request,
                 error_message,
                 reason='validationError',
                 status=HTTP_400_BAD_REQUEST,
@@ -104,6 +107,7 @@ def create_or_update_form(request, hashid):
     form = FwdFormModelForm(data)
     if not form.is_valid():  # pragma: no cover
         return handle_error(
+            request,
             error_message,
             reason='validationError',
             status=HTTP_400_BAD_REQUEST,
@@ -124,7 +128,8 @@ def forward_form(request, hashid):
         form = FwdForm.objects.get_by_hashid(hashid=hashid)
     except FwdForm.DoesNotExist:  # pragma: no cover
         message = _('We couldn\'t find the form you\'re trying to send to.')
-        return handle_error(message, status=HTTP_404_NOT_FOUND, json_response=json_response)
+        return handle_error(request, message, status=HTTP_404_NOT_FOUND,
+                            json_response=json_response)
 
     is_spam = request.POST.get('_gotcha', False)
     site = form.site
@@ -137,10 +142,10 @@ def forward_form(request, hashid):
             send_mail(request, form)
         except EmptyFormError:
             message = _('Looks like you forgot to complete the form. Please try again.')
-            return handle_error(message, reason='emptyForm', status=HTTP_400_BAD_REQUEST,
+            return handle_error(request, message, reason='emptyForm', status=HTTP_400_BAD_REQUEST,
                                 json_response=json_response)
         except FwdFormError as e:  # pragma: no cover
-            return handle_error(str(e), status=HTTP_500_INTERNAL_SERVER_ERROR,
+            return handle_error(request, str(e), status=HTTP_500_INTERNAL_SERVER_ERROR,
                                 json_response=json_response)
     else:
         form.spam_count = F('spam_count') + 1
@@ -160,4 +165,4 @@ def forward_form(request, hashid):
 
 @require_GET
 def thank_you(request):
-    return render_to_response('fwdform/thankyou.html', {})
+    return render(request, 'fwdform/thankyou.html', {})
