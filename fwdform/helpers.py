@@ -69,7 +69,7 @@ def send_mail(request, instance):
 
     try:
         django_send_mail(subject, message, from_email, recipients, fail_silently=False)
-    except Exception, e:  # pragma: no cover
+    except Exception as e:  # pragma: no cover
         logger.error(str(e))
         message = _('Oops! An error occurred and your message could not be sent.')
         raise FwdFormError(message)
