@@ -1,0 +1,5 @@
+-e .
+
+django>=1.7
+
+# Additional requirements go here

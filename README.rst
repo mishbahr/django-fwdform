@@ -95,6 +95,10 @@ You will need to add corsheaders middleware class to ``MIDDLEWARE_CLASSES`` sett
 
 Note that ``CorsMiddleware`` needs to come before Django's ``CommonMiddleware``.
 
+Allow CORS requests from all domains::
+
+    CORS_ORIGIN_ALLOW_ALL = True
+
 For more information, see https://github.com/ottoyiu/django-cors-headers
 
 

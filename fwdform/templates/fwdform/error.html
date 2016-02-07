@@ -1,0 +1,32 @@
+{% extends "fwdform/base.html" %}
+{% load i18n staticfiles %}
+{% block title %}{% trans 'Error' %} - {{ code }}{% endblock title %}
+{% block body_class %}tpl-error{% endblock %}
+{% block content %}
+    <div class="site-wrapper">
+        <div class="site-wrapper-inner">
+            <div class="cover-container">
+                <div class="masthead clearfix">
+                    <div class="inner">
+                        <h3 class="masthead-brand">fwdform</h3>
+                    </div>
+                </div>
+                <div class="inner cover">
+                    <h1 class="cover-heading">{% trans 'Oops!' %} </h1>
+                    <p class="lead">
+                        {% if message %}
+                            {{ message|safe }}
+                        {% else %}
+                            {% trans 'Something unexpected has happened. Please try again later.' %}
+                        {% endif %}
+                    </p>
+                    <p class="lead">
+                        <a href="javascript:history.back();"
+                           class="btn btn-small btn-default">{% trans 'Back to the previous page' %}
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

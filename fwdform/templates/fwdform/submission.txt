@@ -1,0 +1,10 @@
+
+
+
+{% for field, value in form_data.items %}
+{{field}}:  {{value}}
+
+{% endfor %}
+
+--
+Sent via {{referrer}}, submitted at {% now "jS F Y H:i" %}

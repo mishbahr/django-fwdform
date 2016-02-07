@@ -1,0 +1,23 @@
+{% extends "fwdform/base.html" %}
+{% load i18n %}
+{% block title %}{% trans 'Thank You!' %}{% endblock title %}
+{% block content %}
+    <div class="site-wrapper">
+        <div class="site-wrapper-inner">
+            <div class="cover-container">
+                <div class="inner cover">
+                    <i class="fa fa-inbox fa-5x"></i>
+                    <h1 class="cover-heading">{% trans 'Thank You!' %}</h1>
+                    <p class="lead">
+                        {% trans 'We have received your submission.' %}
+                    </p>
+                    <p class="lead">
+                        <a href="javascript:history.go(-1);"
+                           class="btn btn-small btn-default">{% trans 'Back to the previous page' %}
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
