@@ -4,9 +4,6 @@ import environ
 try:
     from django.conf import settings
 
-    env = environ.Env()
-    environ.Env.read_env()  # reading .env file
-
     settings.configure(
         DEBUG=True,
         LANGUAGE_CODE='en-us',
