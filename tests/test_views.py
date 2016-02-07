@@ -72,7 +72,7 @@ class TestFwdform(TestCase):
         response = self.client.post(create_url, data=data)
         self.assertEquals(response.status_code, 201)
 
-        response_data = json.loads(response.content)
+        response_data = json.loads(response.content.decode())
         # hashid of the newly created form should be returned.
         self.assertTrue('hashid' in response_data)
 
