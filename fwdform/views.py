@@ -139,7 +139,7 @@ def forward_form(request, hashid):
             message = _('Looks like you forgot to complete the form. Please try again.')
             return handle_error(message, reason='emptyForm', status=HTTP_400_BAD_REQUEST,
                                 json_response=json_response)
-        except FwdFormError, e:  # pragma: no cover
+        except FwdFormError as e:  # pragma: no cover
             return handle_error(str(e), status=HTTP_500_INTERNAL_SERVER_ERROR,
                                 json_response=json_response)
     else:
