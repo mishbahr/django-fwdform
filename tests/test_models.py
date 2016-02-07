@@ -3,7 +3,7 @@
 
 from django.test import TestCase
 
-from fwdform.models import Site, FwdForm
+from fwdform.models import FwdForm, Site
 
 
 class TestFwdformModels(TestCase):

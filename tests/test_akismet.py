@@ -4,7 +4,7 @@
 import responses
 
 from django.conf import settings
-from django.test import TestCase, RequestFactory
+from django.test import RequestFactory, TestCase
 
 from fwdform.akismet import Akismet
 
