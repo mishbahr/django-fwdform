@@ -19,7 +19,7 @@ from fwdform.models import Site, FwdForm
 
 
 urlpatterns = [
-   url(r'^', include('fwdform.urls', namespace='fwdform')),
+    url(r'^', include('fwdform.urls', namespace='fwdform')),
 ]
 
 
@@ -44,7 +44,8 @@ class TestFwdform(TestCase):
         self.contact_form_hashid = self.fwdform.hashid
 
         self.form_action_url = reverse('fwdform:forward_form', kwargs={
-            'hashid': self.contact_form_hashid })
+            'hashid': self.contact_form_hashid
+        })
 
         self.form_data = {
             'name': 'John Smith',
@@ -115,7 +116,7 @@ class TestFwdform(TestCase):
         self.assertRedirects(response, thankyou_url)
 
         fwdform = FwdForm.objects.get(pk=self.fwdform.pk)
-        self.assertTrue(fwdform.sent_count, 1)    \
+        self.assertTrue(fwdform.sent_count, 1)
 
     @mock.patch('fwdform.akismet.Akismet.is_spam')
     def test_forward_form_view_returns_400_for_empty_submissions(self, mock_akismet):
