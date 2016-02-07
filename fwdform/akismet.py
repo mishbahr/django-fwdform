@@ -2,8 +2,8 @@
 
 from __future__ import unicode_literals
 
-from django import __version__ as django_version
 from django.utils import six
+from django.utils.version import get_version as django_get_version
 from requests.api import request
 from requests.exceptions import RequestException
 
@@ -35,7 +35,7 @@ class Akismet(object):
 
     def get_akismet_ua(self):
         return 'Django/{django_version} | Fwdform/{fwdform_version}'.format(
-            django_version=django_version,
+            django_version=django_get_version(),
             fwdform_version=fwdform_version
         )
 
