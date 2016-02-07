@@ -80,6 +80,10 @@ class FwdForm(HashidsModel, TimeStampedModel):
     sent_count = models.PositiveIntegerField(_('Total Submissions'), default=0)
     spam_count = models.PositiveIntegerField(_('Spam Count'), default=0)
 
+    class Meta:
+        verbose_name = _('Form')
+        verbose_name_plural = _('Forms')
+
     def __str__(self):
         return self.name
 
