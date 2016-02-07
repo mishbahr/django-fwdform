@@ -1,5 +1,4 @@
 import sys
-import environ
 
 try:
     from django.conf import settings
