@@ -9,14 +9,17 @@ Tests for `django-fwdform` models module.
 """
 import json
 
-from django.conf.urls import url, include
+from django.conf.urls import include, url
 from django.core import mail
 from django.core.urlresolvers import reverse
-from django.test import TestCase, override_settings, Client
-from mock import mock
+from django.test import Client, TestCase, override_settings
 
-from fwdform.models import Site, FwdForm
+from fwdform.models import FwdForm, Site
 
+try:
+    from unittest import mock
+except ImportError:
+    import mock
 
 urlpatterns = [
     url(r'^', include('fwdform.urls', namespace='fwdform')),
